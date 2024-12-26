@@ -230,8 +230,8 @@ app.post("/stripe-payout-session", async (req, res) => {
           quantity: item.quantity,
         };
       }),
-      success_url: "http://localhost:3000/success.html", // Adjust to your actual success URL
-      cancel_url: "http://localhost:3000/cancel.html", // Adjust to your actual cancel URL
+      success_url: "http://localhost:3000/success", // Adjust to your actual success URL
+      cancel_url: "http://localhost:3000/cancel", // Adjust to your actual cancel URL
     });
 
     // Send the session URL back to the frontend
