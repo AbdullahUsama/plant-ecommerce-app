@@ -291,7 +291,7 @@ app.post("/api/products", async (req, res) => {
   }
 });
 
-app.put("/api/products/:id", async (req, res) => {
+app.put("/update-product/:id", async (req, res) => {
   try {
     const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
       new: true,

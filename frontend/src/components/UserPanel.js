@@ -198,6 +198,11 @@ const UserPanel = () => {
   const [cartItems, setCartItems] = useState([]); // Track items in the cart
   const [isCartOpen, setIsCartOpen] = useState(false); // Track cart panel visibility
   const [successMessage, setSuccessMessage] = useState(null); // Track success messages
+  // Calculate total price of the cart
+  const totalPrice = cartItems.reduce(
+    (total, item) => total + item.quantity * item.price,
+    0
+  );
 
   // Calculate total cart count
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
@@ -222,7 +227,27 @@ const UserPanel = () => {
   }, []);
 
   // Handle adding products to the cart
-  const addToCart = (productId, productName) => {
+  // const addToCart = (productId, productName) => {
+  //   setCartItems((prevItems) => {
+  //     const existingItem = prevItems.find((item) => item.id === productId);
+  //     if (existingItem) {
+  //       // If item exists, increase quantity
+  //       return prevItems.map((item) =>
+  //         item.id === productId
+  //           ? { ...item, quantity: item.quantity + 1 }
+  //           : item
+  //       );
+  //     } else {
+  //       // If item doesn't exist, add new item with quantity 1
+  //       return [
+  //         ...prevItems,
+  //         { id: productId, name: productName, quantity: 1 },
+  //       ];
+  //     }
+  //   });
+  //   setSuccessMessage(`✅Added`); // Set success message
+  // };
+  const addToCart = (productId, productName, productPrice) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.id === productId);
       if (existingItem) {
@@ -236,11 +261,16 @@ const UserPanel = () => {
         // If item doesn't exist, add new item with quantity 1
         return [
           ...prevItems,
-          { id: productId, name: productName, quantity: 1 },
+          {
+            id: productId,
+            name: productName,
+            price: productPrice,
+            quantity: 1,
+          },
         ];
       }
     });
-    setSuccessMessage(`✅Added`); // Set success message
+    setSuccessMessage(`✅ ${productName} has been added to your cart!`); // Set success message
   };
 
   // Toggle card expansion
@@ -290,37 +320,58 @@ const UserPanel = () => {
 
       const storeInventory = new Map(
         result.map((item) => [
-          item._id, // Use _id as the key
-          { priceInCents: item.price, name: item.name }, // Format the value
+          item._id,
+          { priceInCents: item.price, name: item.name },
         ])
       );
-
       // console.log(storeInventory);
+      // console.log(selectedItems);
 
-      const finalCheckoutResult = await fetch(
-        "http://localhost:5000/stripe-payout-session",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            selectedItems,
-            storeInventory: Array.from(storeInventory), // Convert Map to an array
-          }),
+      let totalPriceInCents = 0;
+
+      // Iterate through selected items
+      for (let i = 0; i < selectedItems.items.length; i++) {
+        const { id, quantity } = selectedItems.items[i];
+        const product = storeInventory.get(id);
+
+        if (product) {
+          totalPriceInCents += product.priceInCents * quantity;
+        } else {
+          console.warn(`Product with ID ${id} not found in store inventory.`);
         }
-      )
-        .then((res) => {
-          if (res.ok) return res.json();
-          return res.json().then((json) => Promise.reject(json));
-        })
-        .then(({ url }) => {
-          console.log(url);
-          window.location = url;
-        })
-        .catch((e) => {
-          console.error(e.error);
-        });
+      }
+
+      console.log(`Total Price: ${totalPriceInCents} cents`);
+
+      if (totalPriceInCents >= 150) {
+        const finalCheckoutResult = await fetch(
+          "http://localhost:5000/stripe-payout-session",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              selectedItems,
+              storeInventory: Array.from(storeInventory),
+            }),
+          }
+        )
+          .then((res) => {
+            if (res.ok) return res.json();
+            return res.json().then((json) => Promise.reject(json));
+          })
+          .then(({ url }) => {
+            console.log(url);
+            window.location = url;
+          })
+          .catch((e) => {
+            console.error(e.error);
+          });
+      } else {
+        console.log("price must be greater than Rs. 150");
+        alert("Total Price must be greater than Rs. 150");
+      }
     } catch (e) {
       console.log("Error: ", e);
     }
@@ -425,12 +476,24 @@ const UserPanel = () => {
                           <p className="text-sm mb-2">
                             <strong>Description:</strong> {product.description}
                           </p>
-                          <button
+                          {/* <button
                             onClick={(e) => {
                               e.stopPropagation(); // Prevent card toggle on button click
                               addToCart(product._id, product.name); // Pass product name
                             }}
                             className="w-full py-2 bg-green-600 text-white font-medium rounded-md shadow hover:bg-green-700 transition focus:outline-none focus:ring-2 focus:ring-green-400"
+                          >
+                            Add to Cart
+                          </button> */}
+                          <button
+                            onClick={() =>
+                              addToCart(
+                                product._id,
+                                product.name,
+                                product.price
+                              )
+                            }
+                            className="w-full py-2 bg-green-600 text-white font-medium rounded-md shadow hover:bg-green-700 transition focus:outline-none"
                           >
                             Add to Cart
                           </button>
@@ -550,6 +613,14 @@ const UserPanel = () => {
                     </div>
                   ))
                 )}
+                {cartItems.length > 0 && (
+                  <div className="mt-4 border-t pt-2">
+                    <h3 className="text-lg font-semibold">
+                      Total Price: Rs.{totalPrice}
+                    </h3>
+                  </div>
+                )}
+
                 {cartItems.length > 0 && (
                   <button
                     className="w-full py-2 bg-blue-600 text-white font-semibold rounded-md shadow hover:bg-blue-700 transition-colors duration-200"
