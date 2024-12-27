@@ -434,7 +434,7 @@ const UserPanel = () => {
                     className={`relative bg-white border border-gray-200 rounded-lg shadow-sm transition-transform transform ${
                       expandedCard === index
                         ? "scale-105 shadow-2xl z-20 cursor-pointer"
-                        : "hover:shadow-md cursor-pointer"
+                        : "hover:shadow-xl cursor-pointer"
                     } ${isBlurred ? "blur-sm pointer-events-none" : ""}`}
                     onClick={() => toggleExpandCard(index)} // Toggle card expansion
                   >

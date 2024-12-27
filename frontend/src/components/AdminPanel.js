@@ -257,7 +257,7 @@ const AdminPanel = () => {
       <div className="mt-10 text-center">
         <button
           onClick={() => setShowAddProductForm(!showAddProductForm)}
-          className="px-4 py-2 bg-indigo-500 text-white font-medium rounded-md shadow hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
+          className="px-4 py-2 bg-green-800 text-white font-medium rounded-md shadow hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-green-400 transition"
         >
           Add New Product
         </button>
@@ -352,7 +352,7 @@ const AdminPanel = () => {
                 <option value="" disabled>
                   Select a category
                 </option>
-                <option value="Sampling">Sampling</option>
+                <option value="Sapling">Sapling</option>
                 <option value="Plant">Plant</option>
                 <option value="Trees">Trees</option>
                 <option value="Pots">Pots</option>
@@ -368,7 +368,7 @@ const AdminPanel = () => {
                 type="file"
                 accept="image/*"
                 onChange={handleFileChange}
-                required
+                // required
                 className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
               />
             </div>
@@ -386,7 +386,7 @@ const AdminPanel = () => {
       <div className="mt-10 text-center">
         <button
           onClick={() => setShowProducts(!showProducts)}
-          className="px-4 py-2 bg-indigo-500 text-white font-medium rounded-md shadow hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
+          className="px-4 py-2 bg-green-800 text-white font-medium rounded-md shadow hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-green-400 transition"
         >
           {/* See All Products */}
           {showProducts ? "Close All Products" : "See All Products"}
@@ -510,7 +510,7 @@ const AdminPanel = () => {
                     <option value="" disabled>
                       Select a category
                     </option>
-                    <option value="Sampling">Sampling</option>
+                    <option value="Sapling">Sapling</option>
                     <option value="Plant">Plant</option>
                     <option value="Trees">Trees</option>
                     <option value="Pots">Pots</option>
