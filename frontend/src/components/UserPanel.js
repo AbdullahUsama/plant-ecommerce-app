@@ -190,6 +190,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import { FaShoppingCart } from "react-icons/fa"; // Importing the cart icon
 import { FaPlus, FaMinus } from "react-icons/fa";
+import backgroundImage from "./img/background.png";
 
 const UserPanel = () => {
   const [products, setProducts] = useState([]);
@@ -380,7 +381,12 @@ const UserPanel = () => {
   return (
     <>
       <Navbar />
-      <div className="bg-gray-50 min-h-screen relative">
+      <div
+        className=" bg-green-50 min-h-screen relative"
+        // style={{
+        //   backgroundImage: `url(${backgroundImage})`, // Use the imported image
+        // }}
+      >
         <div className="container mx-auto py-8 px-4 relative">
           {/* Cart Icon */}
           <div className="absolute top-4 right-4">
