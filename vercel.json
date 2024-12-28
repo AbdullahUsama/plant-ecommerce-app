@@ -1,0 +1,20 @@
+{
+  "projects": {
+    "frontend": {
+      "source": "./frontend",
+      "buildCommand": "npm run build",
+      "outputDirectory": "build"
+    },
+    "backend": {
+      "source": "./backend",
+      "buildCommand": "npm install",
+      "apiDirectory": "api"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/backend/api/$1"
+    }
+  ]
+}
