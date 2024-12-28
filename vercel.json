@@ -1,20 +1,21 @@
 {
-  "projects": {
-    "frontend": {
-      "source": "./frontend",
-      "buildCommand": "npm run build",
-      "outputDirectory": "build"
-    },
-    "backend": {
-      "source": "./backend",
-      "buildCommand": "npm install",
-      "apiDirectory": "api"
-    }
-  },
   "rewrites": [
     {
       "source": "/api/(.*)",
       "destination": "/backend/api/$1"
+    }
+  ],
+  "builds": [
+    {
+      "src": "frontend/**",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "frontend/build"
+      }
+    },
+    {
+      "src": "backend/api/**",
+      "use": "@vercel/node"
     }
   ]
 }
