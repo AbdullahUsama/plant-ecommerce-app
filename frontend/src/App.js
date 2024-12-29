@@ -1,5 +1,4 @@
 import { SignedIn, SignedOut, useUser } from "@clerk/clerk-react";
-//final
 import AdminPanel from "./components/AdminPanel";
 import ProtectedRoute from "./ProtectedRoute";
 import NotAuthorized from "./components/NotAuthorized";
