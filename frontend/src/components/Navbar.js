@@ -17,7 +17,6 @@ const Navbar = () => {
               Bloom
             </span>
           </a>
-          {/* Divider */}
           <div className="text-white mx-4">|</div>
           {/* Navigation Links */}
           <div className="flex space-x-6">
