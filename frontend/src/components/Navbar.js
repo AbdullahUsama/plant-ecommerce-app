@@ -1,5 +1,6 @@
 import React from "react";
 import { UserButton, useUser } from "@clerk/clerk-react";
+import { Link } from "react-router-dom";
 import logo from "./img/logo_plant.png"; // Import the logo
 
 const Navbar = () => {
@@ -13,9 +14,26 @@ const Navbar = () => {
           <a href="/" className="flex items-center">
             <img src={logo} alt="Brand Logo" className="h-8 w-8 rounded-full" />
             <span className="ml-2 text-lg font-bold hover:text-gray-200 transition">
-              OnlyPlants
+              Bloom
             </span>
           </a>
+          {/* Divider */}
+          <div className="text-white mx-4">|</div>
+          {/* Navigation Links */}
+          <div className="flex space-x-6">
+            <Link
+              to="/about-us"
+              className="text-sm font-semibold hover:text-green-200 transition duration-300"
+            >
+              About Us
+            </Link>
+            <Link
+              to="/contact"
+              className="text-sm font-semibold hover:text-green-200 transition duration-300"
+            >
+              Contact Us
+            </Link>
+          </div>
         </div>
 
         {/* User Info and Actions */}

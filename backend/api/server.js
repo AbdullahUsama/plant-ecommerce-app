@@ -34,15 +34,6 @@ const connectDB = async () => {
 };
 
 connectDB();
-
-// Product Schema and Model
-// const productSchema = mongoose.Schema({
-//   name: { type: String, required: true },
-//   description: { type: String, required: true },
-//   price: { type: Number, required: true },
-//   category: { type: String, required: true },
-//   stock: { type: Number, required: true },
-// });
 const productSchema = mongoose.Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },
@@ -59,7 +50,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-//chnage later on as required
 app.post("/api/upload", upload.single("file"), (req, res) => {
   try {
     const file = req.file;
@@ -108,7 +98,7 @@ app.get("/api/products", async (req, res) => {
 app.get("/get-all-products", async (req, res) => {
   try {
     const response = await Product.find();
-    res.status(200).json(response); // Ensure response is sent
+    res.status(200).json(response);
   } catch (e) {
     console.log("Error: ", e);
     res
@@ -156,32 +146,6 @@ app.post("/stripe-payout-session", async (req, res) => {
   }
 });
 
-// app.post("/stripe-payout-session", async (req, res) => {
-//   const { selectedItems, storeInventory } = req.body;
-//   const inventoryMap = new Map(storeInventory);
-
-//   const session = await stripe.checkout.session.create({
-//     payment_method_types: ["card"],
-//     mode: "payment",
-
-//   })
-// });
-
-// app.post("/api/products", async (req, res) => {
-//   try {
-//     const { name, description, price, category, stock } = req.body;
-//     if (!name || !description || !price || !category || !stock) {
-//       return res.status(400).json({ message: "All fields are required" });
-//     }
-//     const product = new Product({ name, description, price, category, stock });
-//     await product.save();
-//     res.status(201).json(product);
-//   } catch (error) {
-//     res
-//       .status(500)
-//       .json({ message: "Error creating product", error: error.message });
-//   }
-// });
 app.post("/api/products", async (req, res) => {
   try {
     const { name, description, price, category, stock, img } = req.body;

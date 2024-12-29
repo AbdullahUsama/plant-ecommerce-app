@@ -191,6 +191,7 @@ import Navbar from "./Navbar";
 import { FaShoppingCart } from "react-icons/fa"; // Importing the cart icon
 import { FaPlus, FaMinus } from "react-icons/fa";
 import backgroundImage from "./img/background.png";
+import Footer from "./Footer";
 
 const UserPanel = () => {
   const [products, setProducts] = useState([]);
@@ -640,6 +641,7 @@ const UserPanel = () => {
           </>
         )}
       </div>
+      <Footer />
     </>
   );
 };

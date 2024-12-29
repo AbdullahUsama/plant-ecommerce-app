@@ -12,7 +12,7 @@ export default function LandingPage() {
     >
       <div className="text-center bg-white bg-opacity-5 backdrop-blur-md p-8 rounded-lg shadow-lg max-w-xl">
         <h1 className="text-4xl font-bold mb-6 text-green-600">
-          Welcome to OnlyPlants
+          Welcome to Bloom
         </h1>
         <p className="text-lg text-black mb-10">
           Sell Your Samplings, PLants, decorations and everything gardening
@@ -36,7 +36,7 @@ export default function LandingPage() {
       <footer className="mt-12 text-sm text-gray-900">
         <h1>
           <strong>
-            &copy; {new Date().getFullYear()} OnlyPlants. All rights reserved.
+            &copy; {new Date().getFullYear()} Bloom. All rights reserved.
           </strong>
         </h1>
       </footer>
