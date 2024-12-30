@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
+import Help from "./Help";
 
 const AdminPanel = () => {
   const [product, setProduct] = useState({
@@ -18,21 +19,22 @@ const AdminPanel = () => {
   const [successMessage, setSuccessMessage] = useState(false);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [productId, setProductId] = useState("");
-  const [file, setFile] = useState(null); // For Add Product Form
-  const [updateFile, setUpdateFile] = useState(null); // For Update Product Form
+  const [file, setFile] = useState(null);
+  const [updateFile, setUpdateFile] = useState(null);
+  const [showHelp, setShowHelp] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       const form = document.getElementById("updateForm");
       if (form && !form.contains(event.target)) {
-        setShowUpdateForm(false); // Close the form
+        setShowUpdateForm(false);
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside); // Attach event listener
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside); // Cleanup event listener
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [setShowUpdateForm]);
 
@@ -254,6 +256,19 @@ const AdminPanel = () => {
       <h2 className="text-3xl font-bold text-green-700 text-center mb-8">
         Admin Panel
       </h2>
+
+      {/* Help and Add Product Buttons */}
+      <div className="flex justify-center space-x-4 mt-10">
+        <button
+          onClick={() => setShowHelp(true)}
+          className="px-4 py-2 bg-blue-800 text-white font-medium rounded-md shadow hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+        >
+          Help | مدد
+        </button>
+      </div>
+
+      {showHelp && <Help onClose={() => setShowHelp(false)} />}
+
       <div className="mt-10 text-center">
         <button
           onClick={() => setShowAddProductForm(!showAddProductForm)}
