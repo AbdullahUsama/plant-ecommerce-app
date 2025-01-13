@@ -489,7 +489,8 @@ const UserPanel = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/products");
+        // const response = await fetch("http://localhost:5000/api/products");
+        const response = await fetch("/api/products");
         const data = await response.json();
         if (response.ok) {
           setProducts(data);
@@ -578,7 +579,8 @@ const UserPanel = () => {
       })),
     };
     try {
-      const response = await fetch("http://localhost:5000/get-all-products");
+      // const response = await fetch("http://localhost:5000/get-all-products");
+      const response = await fetch("/get-all-products");
       const allProducts = await response.json();
       const result = allProducts.map((product) => ({
         _id: product._id,
@@ -611,7 +613,8 @@ const UserPanel = () => {
 
       if (totalPriceInCents >= 150) {
         const finalCheckoutResult = await fetch(
-          "http://localhost:5000/stripe-payout-session",
+          // "http://localhost:5000/stripe-payout-session",
+          "/stripe-payout-session",
           {
             method: "POST",
             headers: {
