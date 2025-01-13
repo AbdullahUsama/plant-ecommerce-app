@@ -41,7 +41,8 @@ const AdminPanel = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/products");
+        // const response = await fetch("http://localhost:5000/api/products");
+        const response = await fetch("/api/products");
         const data = await response.json();
         if (response.ok) {
           setProducts(data);
@@ -78,7 +79,8 @@ const AdminPanel = () => {
       if (file) {
         const formData = new FormData();
         formData.append("file", file);
-        const uploadResponse = await fetch("http://localhost:5000/api/upload", {
+        // const uploadResponse = await fetch("http://localhost:5000/api/upload", {
+        const uploadResponse = await fetch("/api/upload", {
           method: "POST",
           body: formData,
         });
@@ -93,7 +95,8 @@ const AdminPanel = () => {
 
       const productData = { ...product, img: imageUrl };
       // console.log(productData);
-      const response = await fetch("http://localhost:5000/api/products", {
+      // const response = await fetch("http://localhost:5000/api/products", {
+      const response = await fetch("/api/products", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
